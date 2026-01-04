@@ -22,6 +22,7 @@ export default function DetectPCG() {
             });
 
             const data = await res.json();
+            console.log(data)
             setResult(data);
         } catch (err) {
             alert("Error connecting to server");
@@ -62,9 +63,19 @@ export default function DetectPCG() {
                     {loading ? "Detecting..." : "Detect"}
                 </button>
                 {result && (
-                    <div className="mt-6 bg-teal-50 p-4 rounded-md text-sm">
-                        <p><b>Prediction:</b> {result.prediction}</p>
+                    <div className="bg-teal-50 p-4 rounded-md text-sm">
+                        <p><b>Prediction:</b> {result.predicted_class}</p>
                         <p><b>Confidence:</b> {(result.confidence * 100).toFixed(2)}%</p>
+                        <div className="">
+                            <b>Probabilities:</b>
+                            <ul className="ml-4 list-disc">
+                                {Object.entries(result.probabilities).map(([label, prob]) => (
+                                    <li key={label}>
+                                        {label}: {(prob * 100).toFixed(2)}%
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                 )}
 

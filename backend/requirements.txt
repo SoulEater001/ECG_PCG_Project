@@ -1,0 +1,34 @@
+# ===============================
+# Backend API
+# ===============================
+fastapi
+uvicorn[standard]
+python-multipart
+fastapi[all]  # includes optional features like CORS
+
+# ===============================
+# Deep Learning & ML
+# ===============================
+torch
+torchvision
+numpy
+
+# ===============================
+# Audio & Signal Processing
+# ===============================
+librosa
+scipy
+soundfile
+wfdb
+
+# ===============================
+# Image & Visualization
+# ===============================
+pillow
+opencv-python
+matplotlib
+
+# ===============================
+# Utilities
+# ===============================
+tqdm
