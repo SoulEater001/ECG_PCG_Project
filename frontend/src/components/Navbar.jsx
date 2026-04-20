@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <nav className="bg-teal-600 text-white px-8 py-4 flex justify-between items-center shadow-md">
       <h1 className="text-xl font-semibold tracking-wide">
-        CardioDetect
+        CardioX
       </h1>
 
       <div className="space-x-6 text-sm font-medium">
@@ -16,6 +16,9 @@ export default function Navbar() {
         </Link>
         <Link href="/detect-pcg" className="hover:text-teal-200 transition">
           Detect PCG
+        </Link>
+        <Link href="/detect-hybrid" className="hover:text-teal-200 transition">
+          Hybrid Mode
         </Link>
         <Link href="/about" className="hover:text-teal-200 transition">
           About

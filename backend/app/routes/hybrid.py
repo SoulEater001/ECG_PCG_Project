@@ -1,14 +1,13 @@
 from fastapi import APIRouter, UploadFile, File
 import os
 from fastapi.responses import JSONResponse
-# from app.services.ecg_pipeline import load_model, ecgInference
+# from app.services.hybrid_pipeline import load_model, HybridInference
 import random
 
-router = APIRouter(prefix="/ecg", tags=["ECG"])
+router = APIRouter(prefix="/hybrid", tags=["Hybrid"])
 
 # model = load_model()
-# inference = ecgInference(model)
-
+# inference = HybridInference(model)
 
 mock_results = [
     {
@@ -53,18 +52,23 @@ mock_results = [
     }
 ]
 
-
 @router.post("/detect")
-async def detect_pcg(file: UploadFile = File(...)):
-    temp_path = f"temp_{file.filename}"
+async def detect_hybrid(
+    ecg: UploadFile = File(...),
+    pcg: UploadFile = File(...)
+):
+    ecg_path = f"temp_ecg_{ecg.filename}"
+    pcg_path = f"temp_pcg_{pcg.filename}"
 
-    with open(temp_path, "wb") as f:
-        f.write(await file.read())
+    with open(ecg_path, "wb") as f:
+        f.write(await ecg.read())
+
+    with open(pcg_path, "wb") as f:
+        f.write(await pcg.read())
 
     try:
-        # result = inference.predict(temp_path)
-        # return JSONResponse(result)
         result = random.choice(mock_results)
         return JSONResponse(content=result)
     finally:
-        os.remove(temp_path)
+        os.remove(ecg_path)
+        os.remove(pcg_path)

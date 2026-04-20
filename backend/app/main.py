@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes import ecg
 from app.routes import pcg
+from app.routes import hybrid
 
 app = FastAPI(
     title="CardioDetect API",
@@ -20,6 +21,7 @@ app.add_middleware(
 
 app.include_router(ecg.router)
 app.include_router(pcg.router)
+app.include_router(hybrid.router)
 @app.get("/")
 def root():
     return {"message": "CardioDetect Backend Running"}

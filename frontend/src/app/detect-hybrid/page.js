@@ -2,21 +2,25 @@
 import { useState } from "react";
 
 export default function DetectECG() {
-    const [file, setFile] = useState(null);
+    const [ecgFile, setEcgFile] = useState(null);
+    const [pcgFile, setPcgFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState(null);
 
     const handleDetect = async () => {
-        if (!file) return alert("Please upload an ECG file");
+        if (!ecgFile || !pcgFile) {
+            return alert("Please upload both ECG and PCG files");
+        }
 
         const formData = new FormData();
-        formData.append("file", file);
+        formData.append("ecg", ecgFile);
+        formData.append("pcg", pcgFile);
 
         setLoading(true);
         setResult(null);
 
         try {
-            const res = await fetch("http://127.0.0.1:8000/ecg/detect", {
+            const res = await fetch("http://127.0.0.1:8000/hybrid/detect", {
                 method: "POST",
                 body: formData,
             });
@@ -35,26 +39,46 @@ export default function DetectECG() {
 
             <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-semibold mb-2 text-gray-800">
-                    Detect ECG
+                    Detect in Hybrid Mode
                 </h2>
 
                 <p className="mb-6 text-gray-600 text-sm">
-                    Upload ECG signal or image for detection.
+                    Upload ECG & PCG signal or image for detection.
                 </p>
 
                 {/* File Upload */}
                 <label className="block w-full mb-6">
-                    <span className="sr-only">Choose ECG file</span>
+                    <span className="block mb-2 text-sm font-medium text-gray-700">
+                        Upload ECG File
+                    </span>
                     <input
                         type="file"
-                        onChange={(e) => setFile(e.target.files[0])}
+                        onChange={(e) => setEcgFile(e.target.files[0])}
                         className="block w-full text-sm text-gray-500
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-md file:border-0
-                            file:text-sm file:font-medium
-                          file:bg-teal-50 file:text-teal-700
-                          hover:file:bg-teal-100
-                            cursor-pointer"
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-md file:border-0
+            file:text-sm file:font-medium
+            file:bg-blue-50 file:text-blue-700
+            hover:file:bg-blue-100
+            cursor-pointer"
+                    />
+                </label>
+
+                {/* PCG Upload */}
+                <label className="block w-full mb-6">
+                    <span className="block mb-2 text-sm font-medium text-gray-700">
+                        Upload PCG File
+                    </span>
+                    <input
+                        type="file"
+                        onChange={(e) => setPcgFile(e.target.files[0])}
+                        className="block w-full text-sm text-gray-500
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-md file:border-0
+            file:text-sm file:font-medium
+            file:bg-purple-50 file:text-purple-700
+            hover:file:bg-purple-100
+            cursor-pointer"
                     />
                 </label>
 
