@@ -10,7 +10,7 @@ router = APIRouter(prefix="/ecg", tags=["ECG"])
 # inference = ecgInference(model)
 
 
-mock_results = [
+accumulation = [
     {
         "predicted_class": "Normal",
         "confidence": 0.94,
@@ -64,7 +64,7 @@ async def detect_pcg(file: UploadFile = File(...)):
     try:
         # result = inference.predict(temp_path)
         # return JSONResponse(result)
-        result = random.choice(mock_results)
+        result = random.choice(accumulation)
         return JSONResponse(content=result)
     finally:
         os.remove(temp_path)

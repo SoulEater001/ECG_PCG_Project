@@ -9,7 +9,7 @@ router = APIRouter(prefix="/hybrid", tags=["Hybrid"])
 # model = load_model()
 # inference = HybridInference(model)
 
-mock_results = [
+accumulation = [
     {
         "predicted_class": "Normal",
         "confidence": 0.94,
@@ -67,7 +67,7 @@ async def detect_hybrid(
         f.write(await pcg.read())
 
     try:
-        result = random.choice(mock_results)
+        result = random.choice(accumulation)
         return JSONResponse(content=result)
     finally:
         os.remove(ecg_path)
